@@ -1,14 +1,18 @@
 This project aims at building an infrastructure to configure, distribute and maintain a network of Tor bridges in the context of a single entity.
 
+The assumed scenario is that you have an entity interested in extending the Tor network with a staff will to donate their underutilized bandwidth, with a technical staff capable of building the images, distributing them and upgrading them as necessary.
+
+The system runs [Tor](https://www.torproject.org/) on the [OpenBSD](http://www.openbsd.org) operating system customized for embedded hardware with [flashrd](http://www.nmedia.net/flashrd). Hardware such as Alix boards from [PCEngines](http://pcengines.ch) is the initial target platform.
+
 The core components include:
 
 * flashrd http://www.nmedia.net/flashrd/
 
 * custom flashrd build scripts
 
-* static web page generator for local statistics
+* static web page generator for local statistics to be run off the Tor bridge
 
-* a user questionnaire for acquiring the details necessary for Tor bridge configuration
+* a user questionnaire for acquiring the details necessary for Tor bridge configuration, with some questions to be deprecated as the answers are automated
 
 * a "hub" server for monitoring the Tor bridges and for distributing system updates
 
