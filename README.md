@@ -9,12 +9,14 @@ The core software components include:
 * a user questionnaire for acquiring the details necessary for Tor bridge config
 uration, with some questions to be deprecated as the answers are automated
 
+* a [build-server](build-server/) for creating and updating the flashrd images
+
 * [flashrd](http://www.nmedia.net/flashrd/)
 
 * [custom flashrd build scripts](build-scripts/)
 
-* static web page generator for local statistics to be run on the Tor bridge, providing the local network user basic information about bridge usage, status, and so on
+* static [web site generation scripts](www-generation/) for local statistics to be run on the Tor bridge, providing the local network user basic information about bridge usage, status, and so on
 
-* a hub server for monitoring the Tor bridges and for distributing system updates
+* a [hub server](hub-server) for monitoring the Tor bridges and for distributing system updates
 
 This project is in its very early days with a number of critical components still in the brainstorm stage.
