@@ -1,0 +1,2 @@
+# appended by entity-bridges
+*/1	*	*	*	*	/bin/sh $PATHtoSCRIPT/build_all.sh
