@@ -1,4 +1,4 @@
-This project is aimed at building an infrastructure to configure, distribute and maintain a network of Tor bridges in the context of a single entity.
+This project aims at building an infrastructure to configure, distribute and maintain a network of Tor bridges in the context of a single entity.
 
 The core components include:
 
