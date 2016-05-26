@@ -1,0 +1,5 @@
+lines to remove from build script for production version:
+
+remove console access
+
+nologin for root
