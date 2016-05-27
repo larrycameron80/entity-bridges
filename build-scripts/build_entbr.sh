@@ -13,6 +13,7 @@ source="${source:-$HOME/openbsd}"	# where the source resides
 mirror="${mirror:-ftp://mirrors.nycbug.org/pub/OpenBSD/$ver/$arch}"
 anoncvs="${anoncvs:-anoncvs@openbsd.nycbug.org:/cvs}"	# http://www.openbsd.org/anoncvs.html
 sets="${sets:-{bsd,bsd.rd,SHA256.sig,base$sysver.tgz}}"
+wwwscripts="${wwwscripts:-$HOME/wwwscripts}"		# temporarily
 tz="${tz:-UTC}"
 # be br cf de dk es fr hu is it jp la lt lv nl no pl pt ru sf sg si sv tr ua uk us
 locale="${locale:-us}"
@@ -51,8 +52,26 @@ tar zxpf var/sysmerge/etc.tgz -C $source;
 # /etc/tor/torrc
 # /etc/fstab
 
-
+# /etc/rc.conf.local
 echo 'sndiod_flags=NO\nntpd_flags="-s"\nsmtpd_flags=NO\nhttpd_flags=""' >$source/etc/rc.conf.local;
+
+# httpd configuration
+
+echo 'ext_addr="*"\nserver "default" {\nlisten on $ext_addr port 80\n}' >$source/etc/httpd.conf;
+
+echo "<html>test</html>" >$source/var/www/htdocs/index.html;
+
+# a new root cron, with www regeneration
+
+echo "SHELL=/bin/sh\nPATH=/bin:/sbin:/usr/bin:/usr/sbin\nHOME=/var/log" >$source/var/cron/tabs/root;
+
+echo "0 * * * * /usr/bin/newsyslog\n*/1 * * * * /bin/sh /usr/local/scripts/build_all.sh">>$source/var/cron/tabs/root;
+
+# populate /usr/local/scripts with www generator
+
+mkdir $source/usr/local/scripts;
+
+cp $wwwscripts $source/usr/local/scripts;
 
 #cp -R $conf/* $buildpath;
 
@@ -74,7 +93,7 @@ echo 'sndiod_flags=NO\nntpd_flags="-s"\nsmtpd_flags=NO\nhttpd_flags=""' >$source
 
 # cvs, assuming CVSROOT Root already defined in /usr/src
 
-#cd /usr/src && cvs up -Pd;
+cd /usr/src && cvs up -Pd;
 
 #SOEKRIS deal with DMA errors with 0x0ff0 flags at wd*
 
@@ -86,7 +105,7 @@ echo 'sndiod_flags=NO\nntpd_flags="-s"\nsmtpd_flags=NO\nhttpd_flags=""' >$source
 
 cd $flashrd && /bin/sh flashrd $source;
 
-# reconfigure a bunch of settings and build image
+# build image with some customizations
 
 ./cfgflashrd -k $locale -ntp "pool.ntp.org" -t $tz -dns $dns -hostname $hostname -image $flashrd/flashimg.$arch-$now -com0 9600;
 
